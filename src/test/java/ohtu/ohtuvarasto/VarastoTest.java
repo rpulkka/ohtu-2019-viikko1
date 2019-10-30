@@ -19,6 +19,71 @@ public class VarastoTest {
     public void setUp() {
         varasto = new Varasto(10);
     }
+    
+    @Test
+    public void lisataanLiikaaTavaraa() {
+        varasto.lisaaVarastoon(13);
+        double saldonMaara = 10;
+        assertEquals(0, saldonMaara, varasto.getSaldo());
+    }
+    
+    @Test
+    public void otetaanLiikaaTavaraa() {
+        varasto.lisaaVarastoon(5);
+        double saatuMaara = varasto.otaVarastosta(13);
+        assertEquals(0, 0, varasto.getSaldo());
+        assertEquals(0, 5, saatuMaara);
+    }
+    
+    @Test
+    public void otetaanNegatiivinen() {
+        double saatuMaara = varasto.otaVarastosta(-90);
+        assertEquals(0, saatuMaara, 0);
+    }
+    
+    @Test
+    public void lisataanNegatiivinen() {
+        varasto.lisaaVarastoon(5);
+        varasto.lisaaVarastoon(-6);
+        assertEquals(0, 5, varasto.getSaldo());
+    }
+    
+    @Test
+    public void tehdaanNegatiivinenTilavuus() {
+        Varasto varasto2 = new Varasto(-8);
+        assertEquals(0, varasto2.getTilavuus(), 0);
+    }
+    
+    @Test
+    public void tehdaanNegatiivinenTilavuusSaldolla() {
+        Varasto varasto2 = new Varasto(-8, 10);
+        assertEquals(0, varasto2.getTilavuus(), 0);
+    }
+    
+    @Test
+    public void tehdaanNegatiivinenSaldo() {
+        Varasto varasto2 = new Varasto(10, -10);
+        assertEquals(0, varasto2.getSaldo(), 0);
+    }
+    
+    @Test
+    public void tehdaanLiianSuuriSaldo() {
+        Varasto varasto2 = new Varasto(10, 11);
+        assertEquals(0, varasto2.getSaldo(), 10);
+    }
+    
+    @Test
+    public void tehdaanNormaaliVarasto() {
+        Varasto varasto2 = new Varasto(14, 10);
+        assertEquals(0, varasto2.getSaldo(), 10);
+        assertEquals(0, varasto2.getTilavuus(), 14);
+    }
+    
+    @Test
+    public void merkkijonoToimii() {
+        varasto.lisaaVarastoon(3);
+        assertEquals("saldo = 3.0, vielä tilaa 7.0", varasto.toString());
+    }
 
     @Test
     public void konstruktoriLuoTyhjanVaraston() {
